@@ -1,5 +1,7 @@
 package specs.example1;
 
+import static org.mockito.Mockito.mock;
+
 import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,7 +14,7 @@ import com.example.service.UserService;
 @RunWith(ConcordionRunner.class)
 public class LoginTest {
 
-	UserDao dao;
+	UserDao dao = mock(UserDao.class);
 	UserService service = new UserService(dao);
 
 	@Before

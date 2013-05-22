@@ -12,7 +12,11 @@ public class UserService {
 	}
 
 	public boolean canLogin(String userId, String pass) {
-		throw new RuntimeException("LoginService.canLogin() No implementado");
+		if ("".equals(userId)) {
+			return false;
+		}
+		User user = dao.findById(userId);
+		return dao.isValidPassword(user, pass);
 	}
 
 	public boolean addUser(String userId, String name, String email, String pass) {

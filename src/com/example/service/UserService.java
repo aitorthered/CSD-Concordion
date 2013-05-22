@@ -21,6 +21,7 @@ public class UserService {
 		user.setName(name);
 		user.setEmail(email);
 		dao.insert(user);
+		dao.setPassword(user, pass);
 		return true;
 	}
 }

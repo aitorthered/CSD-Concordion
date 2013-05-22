@@ -1,7 +1,7 @@
 package unit.com.example.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -16,12 +16,6 @@ public class UserServiceTest {
 	UserService service = new UserService(dao);
 
 	@Test
-	public void testAddUser() {
-		assertEquals(true,
-				service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass"));
-	}
-
-	@Test
 	public void testAddUserCallsDaoWithAnyUser() {
 		service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass");
 		verify(dao).insert((User) any());
@@ -30,15 +24,30 @@ public class UserServiceTest {
 	@Test
 	public void testAddUserCallsDaoWithSpecificUser() {
 		service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass");
-		User user = new User() {
-			@Override
-			public boolean equals(Object obj) {
-				return this.getUserId() == ((User) obj).getUserId();
-			}
-		};
+		User user = new User();
 		user.setName("Pepe");
 		user.setUserId("pepito");
 		user.setEmail("pepe@micorreo.es");
 		verify(dao).insert(user);
+	}
+
+	@Test
+	public void testAddUserCallsDaoCallsPassword() {
+		service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass");
+		User user = new User();
+		user.setName("Pepe");
+		user.setUserId("pepito");
+		user.setEmail("pepe@micorreo.es");
+		verify(dao).setPassword((User) any(), anyString());
+	}
+
+	@Test
+	public void testAddUserCallsDaoXCallsPasswordWithSpecificUser() {
+		service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass");
+		User user = new User();
+		user.setUserId("pepito");
+		user.setName("Pepe");
+		user.setEmail("pepe@micorreo.es");
+		verify(dao).setPassword(user, "mipass");
 	}
 }

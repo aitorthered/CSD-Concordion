@@ -8,7 +8,8 @@ public class User extends Entity {
 
 	private String email;
 
-	@Override public boolean isValid() {
+	@Override
+	public boolean isValid() {
 		throw new RuntimeException("Not implemented yet");
 	}
 
@@ -34,6 +35,11 @@ public class User extends Entity {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getUserId().equals(((User) obj).getUserId());
 	}
 
 }

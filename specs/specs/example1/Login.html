@@ -1,0 +1,51 @@
+<html xmlns:c="http://www.concordion.org/2007/concordion">
+<body>
+	<table c:execute="#result = addUser(#userId, #name, #email, #pass)">
+		<tr>
+			<th c:set="#userId">userId</th>
+			<th c:set="#name">name</th>
+			<th c:set="#email">email</th>
+			<th c:set="#pass">pass</th>
+		</tr>
+		<tr>
+			<td>juangomez</td>
+			<td>Juan Gomez</td>
+			<td>juan@micorreo.es</td>
+			<td>clave1</td>
+		</tr>
+		<tr>
+			<td>pedrorivas</td>
+			<td>Pedro Rivas</td>
+			<td>pedro@micorreo.es</td>
+			<td>clave2</td>
+		</tr>
+	</table>
+	<table c:execute="#result = canLogin(#userId, #pass)">
+		<tr>
+			<th c:set="#userId">userId</th>
+			<th c:set="#pass">pass</th>
+			<th c:assertEquals="#result">Puede Logarse?</th>
+		</tr>
+		<tr>
+			<td>juangomez</td>
+			<td>clave1</td>
+			<td>SI</td>
+		</tr>
+		<tr>
+			<td>pedrorivas</td>
+			<td>clave2</td>
+			<td>SI</td>
+		</tr>
+		<tr>
+			<td>juangomez</td>
+			<td>otraclave</td>
+			<td>NO</td>
+		</tr>
+		<tr>
+			<td>noexisto</td>
+			<td>miclave</td>
+			<td>NO</td>
+		</tr>
+	</table>
+</body>
+</html>

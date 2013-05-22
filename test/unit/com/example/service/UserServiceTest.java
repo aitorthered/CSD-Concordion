@@ -2,10 +2,12 @@ package unit.com.example.service;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import com.example.dao.UserDao;
 import com.example.entity.User;
@@ -50,4 +52,18 @@ public class UserServiceTest {
 		user.setEmail("pepe@micorreo.es");
 		verify(dao).setPassword(user, "mipass");
 	}
+
+	@Test
+	public void testAddUserCallsDaoXCallsPasswordInTheCorrectOrder() {
+		service.addUser("pepito", "Pepe", "pepe@micorreo.es", "mipass");
+		User user = new User();
+		user.setUserId("pepito");
+		user.setName("Pepe");
+		user.setEmail("pepe@micorreo.es");
+
+		InOrder inOrder = inOrder(dao, dao);
+		inOrder.verify(dao).insert(user);
+		inOrder.verify(dao).setPassword(user, "mipass");
+	}
+
 }

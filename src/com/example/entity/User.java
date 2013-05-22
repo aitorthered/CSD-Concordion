@@ -39,7 +39,8 @@ public class User extends Entity {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.getUserId().equals(((User) obj).getUserId());
+		return this.getUserId().equals(((User) obj).getUserId())
+				&& this.getEmail().equals(((User) obj).getEmail())
+				&& this.getName().equals(((User) obj).getName());
 	}
-
 }

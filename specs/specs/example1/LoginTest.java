@@ -23,7 +23,6 @@ public class LoginTest {
 	}
 
 	public String canLogin(String userId, String pass) {
-
 		boolean canLogin = service.canLogin(userId, pass);
 		return canLogin ? "SI" : "NO";
 	}

@@ -16,6 +16,9 @@ public class UserService {
 			return false;
 		}
 		User user = dao.findById(userId);
+		if (user == null) {
+			return false;
+		}
 		return dao.isValidPassword(user, pass);
 	}
 

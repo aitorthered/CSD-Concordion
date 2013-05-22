@@ -6,6 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -69,6 +70,8 @@ public class UserServiceTest {
 
 	@Test
 	public void testLoginWithUserIdAndPasswordCallsDao() {
+		User user = createUser();
+		when(dao.findById(USER_USER_ID)).thenReturn(user);
 		service.canLogin(USER_USER_ID, USER_PASS);
 		verify(dao).isValidPassword((User) any(), anyString());
 	}
@@ -96,5 +99,12 @@ public class UserServiceTest {
 		when(dao.isValidPassword(user, USER_PASS)).thenReturn(true);
 		assertTrue(service.canLogin(USER_USER_ID, USER_PASS));
 		assertFalse(service.canLogin(USER_USER_ID, "mipass2"));
+	}
+
+	@Test
+	public void testWhenDaoReturnsUserNotExistIsValidPasswordIsNotCall() {
+		when(dao.findById(USER_USER_ID)).thenReturn(null);
+		assertFalse(service.canLogin(USER_USER_ID, USER_PASS));
+		verify(dao, times(0)).isValidPassword(((User) any()), anyString());
 	}
 }

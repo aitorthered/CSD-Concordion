@@ -4,6 +4,7 @@ import org.concordion.integration.junit4.ConcordionRunner;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
+import com.example.dao.UserDao;
 import com.example.service.UserService;
 
 /* Run this class as a JUnit test. */
@@ -11,7 +12,8 @@ import com.example.service.UserService;
 @RunWith(ConcordionRunner.class)
 public class LoginTest {
 
-	UserService service = new UserService();
+	UserDao dao;
+	UserService service = new UserService(dao);
 
 	@Before
 	public void setUp() {
@@ -25,7 +27,7 @@ public class LoginTest {
 	}
 
 	public void addUser(String userId, String name, String email, String pass) {
-		boolean userAdded = service.addUser(userId, name, email, pass);
+		service.addUser(userId, name, email, pass);
 
 	}
 }

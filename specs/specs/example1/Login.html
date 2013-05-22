@@ -1,6 +1,6 @@
 <html xmlns:c="http://www.concordion.org/2007/concordion">
 <body>
-	<table c:execute="#result = addUser(#userId, #name, #email, #pass)">
+	<table c:execute="addUser(#userId, #name, #email, #pass)">
 		<tr>
 			<th c:set="#userId">userId</th>
 			<th c:set="#name">name</th>
